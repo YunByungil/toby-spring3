@@ -9,10 +9,11 @@ import java.util.Queue;
 
 import static java.lang.System.getenv;
 
-public abstract class UserDao {
+public class UserDao {
 
+    SimpleConnectionMaker connectionMaker = new SimpleConnectionMaker();
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new NUserDao();
+        UserDao userDao = new UserDao();
         User user = new User();
         user.setId("1");
         user.setName("bang5554");
@@ -25,10 +26,9 @@ public abstract class UserDao {
         System.out.println("selectedUser.getPassword() = " + selectedUser.getPassword());
     }
 
-    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection conn = getConnection();
+        Connection conn = connectionMaker.makeNewConnection();
 
         PreparedStatement ps = conn.prepareStatement("insert into users(id, name, password) values(?, ?, ?)");
         ps.setString(1, user.getId());
@@ -43,7 +43,7 @@ public abstract class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection conn = getConnection();
+        Connection conn = connectionMaker.makeNewConnection();
 
         PreparedStatement ps = conn.prepareStatement("select id, name, password from users where id = ?");
         ps.setString(1, id);

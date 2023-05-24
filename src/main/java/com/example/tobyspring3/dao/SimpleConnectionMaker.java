@@ -7,10 +7,10 @@ import java.util.Map;
 
 import static java.lang.System.getenv;
 
-public class NUserDao extends UserDao{
+public class SimpleConnectionMaker {
 
-    @Override
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
+
+    public Connection makeNewConnection() throws SQLException, ClassNotFoundException {
         Map<String, String> env = getenv();
         String dbHost = env.get("DB_HOST");
         String dbUser = env.get("DB_USER");
