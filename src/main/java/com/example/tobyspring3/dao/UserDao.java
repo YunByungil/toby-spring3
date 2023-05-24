@@ -13,19 +13,20 @@ public class UserDao {
 
     ConnectionMaker connectionMaker;
 
-    public UserDao() {
-        connectionMaker = new DConnectionMaker();
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new UserDao();
+        ConnectionMaker cm = new DConnectionMaker();
+        UserDao userDao = new UserDao(cm);
         User user = new User();
-        user.setId("2");
-        user.setName("bang5554");
+        user.setId("3");
+        user.setName("3333");
         user.setPassword("1234");
         userDao.add(user);
 
-        User selectedUser = userDao.get("2");
+        User selectedUser = userDao.get("3");
         System.out.println("selectedUser.getId() = " + selectedUser.getId());
         System.out.println("selectedUser.getName() = " + selectedUser.getName());
         System.out.println("selectedUser.getPassword() = " + selectedUser.getPassword());
